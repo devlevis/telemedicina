@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-i1bx&^cw7)d5s#(n$nb2e57ot#=%98xm--6x)hcy(*s#8v&^y=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['projeto-telemedicina.vercel.app']
 
 
 # Application definition
