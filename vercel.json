@@ -2,11 +2,8 @@
     "version": 2,
     "builds": [
       {
-        "src": "healing/wsgi.py",
-        "use": "@vercel/python",
-        "config": {
-          "runtime": "python3.12.2"
-        }
+        "src": "handler.py",
+        "use": "@vercel/python"
       }
     ],
     "routes": [
@@ -20,7 +17,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "healing/wsgi.py"
+        "dest": "handler.handler"
       }
     ]
   }
