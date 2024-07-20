@@ -70,3 +70,7 @@ Thumbs.db
 # Backup files
 *.bak
 *.tmp
+
+
+.env
+.vercel
