@@ -132,6 +132,3 @@ MESSAGE_TAGS = {
 }
 
 LOGIN_URL='/usuarios/login/'
-
-import django_heroku
-django_heroku.settings(locals())
