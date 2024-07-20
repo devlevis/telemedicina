@@ -1,1 +1,1 @@
-web: gunicorn seu_projeto.wsgi
+web: gunicorn healing.wsgi
