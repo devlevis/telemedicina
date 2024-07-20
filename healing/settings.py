@@ -68,9 +68,8 @@ WSGI_APPLICATION = 'healing.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost')
+    'default': dj_database_url.config(default='postgres://postgres:teresina2023@localhost/meu_banco')
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -133,3 +132,6 @@ MESSAGE_TAGS = {
 }
 
 LOGIN_URL='/usuarios/login/'
+
+import django_heroku
+django_heroku.settings(locals())

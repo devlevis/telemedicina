@@ -1,1 +1,1 @@
-web: gunicorn healing.wsgi --log-file -
+web: gunicorn seu_projeto.wsgi
