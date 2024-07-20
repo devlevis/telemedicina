@@ -5,7 +5,7 @@
         "src": "healing/wsgi.py",
         "use": "@vercel/python",
         "config": {
-          "maxLambdaSize": "10mb"
+          "runtime": "python3.12.2"
         }
       }
     ],
