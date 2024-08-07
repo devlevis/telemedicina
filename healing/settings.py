@@ -1,27 +1,20 @@
 from pathlib import Path
 import os
-import environ
 import dj_database_url
+from dotenv import load_dotenv
 
-# Initialize environment variables
-env = environ.Env()
-environ.Env.read_env() 
+# Carregar variáveis do arquivo .env
+load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Caminhos principais do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+# Segurança
+SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', default=False)
-
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
-
-# Application definition
+# Aplicações instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -34,9 +27,10 @@ INSTALLED_APPS = [
     'paciente'
 ]
 
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -47,6 +41,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'healing.urls'
 
+# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -65,12 +60,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'healing.wsgi.application'
 
-# Database
+# Configuração do Banco de Dados
 DATABASES = {
-    'default': dj_database_url.config(default=env('DATABASE_URL'))
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
-# Password validation
+# Validação de Senhas
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -86,25 +81,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+# Internacionalização
 LANGUAGE_CODE = 'pt-BR'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = False
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = env('STATIC_URL', default='/static/')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates/static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# Arquivos Estáticos
+STATIC_URL = os.getenv('STATIC_URL', '/static/')
+STATICFILES_DIRS = [os.getenv('STATICFILES_DIRS', os.path.join(BASE_DIR, 'static'))]
+STATIC_ROOT = os.getenv('STATIC_ROOT', os.path.join(BASE_DIR, 'static_root'))
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = env('MEDIA_URL', default='/media/')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Arquivos de Mídia
+MEDIA_URL = os.getenv('MEDIA_URL', '/media/')
+MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 
-# Default primary key field type
+# Campo primário padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Messages
+# Mensagens
 from django.contrib.messages import constants
 
 MESSAGE_TAGS = {
@@ -116,4 +112,3 @@ MESSAGE_TAGS = {
 }
 
 LOGIN_URL = '/usuarios/login/'
-
