@@ -89,7 +89,7 @@ USE_TZ = False
 
 # Arquivos Estáticos
 STATIC_URL = os.getenv('STATIC_URL', '/static/')
-STATICFILES_DIRS = [os.getenv('STATICFILES_DIRS', os.path.join(BASE_DIR, 'static'))]
+STATICFILES_DIRS = [r'C:\Users\edson\OneDrive\Documentos\projeto-telemedicina\templates\static']
 STATIC_ROOT = os.getenv('STATIC_ROOT', os.path.join(BASE_DIR, 'static_root'))
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
