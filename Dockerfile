@@ -5,26 +5,30 @@ FROM python:${PYTHON_VERSION}
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install psycopg2 dependencies.
+# Instalar dependências do psycopg2
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
+# Criar diretório de trabalho
 RUN mkdir -p /code
-
 WORKDIR /code
 
-COPY requirements.txt /tmp/requirements.txt
-RUN set -ex && \
-    pip install --upgrade pip && \
-    pip install -r /tmp/requirements.txt && \
-    rm -rf /root/.cache/
-COPY . /code
+# Copiar e instalar requisitos
+COPY requirements.txt /code/
+RUN pip install --upgrade pip \
+    && pip install -r /code/requirements.txt \
+    && rm -rf /root/.cache/
 
-ENV SECRET_KEY "3h6tdSqXEZxLwf35aM0ki9sp1EFFYDRF2SpnDnPIYKAbjxWyJw"
+# Copiar o restante do código
+COPY . /code/
+
+# Coletar arquivos estáticos
 RUN python manage.py collectstatic --noinput
 
+# Expor a porta
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "healing.wsgi"]
+# Comando para iniciar o servidor
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "healing.wsgi:application"]
