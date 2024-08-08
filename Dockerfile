@@ -32,5 +32,3 @@ EXPOSE 8000
 
 # Comando para iniciar o servidor
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "healing.wsgi:application"]
-
-RUN python manage.py migrate --noinput
