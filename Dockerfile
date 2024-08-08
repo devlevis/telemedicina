@@ -24,11 +24,15 @@ RUN pip install --upgrade pip \
 # Copiar o restante do código
 COPY . /code/
 
+# Criar script de inicialização
+COPY start.sh /code/
+RUN chmod +x /code/start.sh
+
 # Coletar arquivos estáticos
 RUN python manage.py collectstatic --noinput
 
 # Expor a porta
 EXPOSE 8000
 
-# Comando para iniciar o servidor
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "healing.wsgi:application"]
+# Comando para iniciar o script de inicialização
+CMD ["/code/start.sh"]
