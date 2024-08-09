@@ -3,7 +3,6 @@ import os
 import dj_database_url
 from dotenv import load_dotenv
 
-
 # Carregar variáveis do arquivo .env
 load_dotenv()
 
@@ -46,7 +45,7 @@ ROOT_URLCONF = 'healing.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, os.getenv('TEMPLATES_DIR', 'templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,7 +89,7 @@ USE_TZ = False
 
 # Arquivos Estáticos
 STATIC_URL = os.getenv('STATIC_URL', '/static/')
-STATICFILES_DIRS = [r'C:\Users\edson\OneDrive\Documentos\projeto-telemedicina\templates\static']
+STATICFILES_DIRS = [os.path.join(BASE_DIR, os.getenv('STATICFILES_DIRS_PATH', 'templates/static'))]
 STATIC_ROOT = os.getenv('STATIC_ROOT', os.path.join(BASE_DIR, 'static_root'))
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
