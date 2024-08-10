@@ -92,6 +92,7 @@ STATIC_URL = os.getenv('STATIC_URL', '/static/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, os.getenv('STATICFILES_DIRS_PATH', 'templates/static'))]
 STATIC_ROOT = os.getenv('STATIC_ROOT', os.path.join(BASE_DIR, 'static_root'))
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+print(STATICFILES_DIRS)
 
 # Arquivos de Mídia
 MEDIA_URL = os.getenv('MEDIA_URL', '/media/')
