@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'usuarios',
     'medico',
-    'paciente'
+    'paciente',
+    'storages',  # Necessário para o S3
 ]
 
 # Middleware
@@ -92,24 +93,38 @@ STATIC_URL = os.getenv('STATIC_URL', '/static/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, os.getenv('STATICFILES_DIRS_PATH', 'templates/static'))]
 STATIC_ROOT = os.getenv('STATIC_ROOT', os.path.join(BASE_DIR, 'static_root'))
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-print(STATICFILES_DIRS)
 
 # Arquivos de Mídia
-MEDIA_URL = os.getenv('MEDIA_URL', '/media/')
-MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
+
+# Configurações do S3
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+
+# Domínio personalizado do S3
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+# Configurações de armazenamento de mídia no S3
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+# Outras configurações opcionais do S3
+AWS_S3_FILE_OVERWRITE = False  # Para evitar sobrescrever arquivos existentes
+AWS_DEFAULT_ACL = None  # Controle de acesso
 
 # Campo primário padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Mensagens
-from django.contrib.messages import constants
+from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
-    constants.DEBUG: 'alert-primary',
-    constants.ERROR: 'alert-danger',
-    constants.SUCCESS: 'alert-success',
-    constants.INFO: 'alert-info',
-    constants.WARNING: 'alert-warning'
+    messages.DEBUG: 'alert-primary',
+    messages.ERROR: 'alert-danger',
+    messages.SUCCESS: 'alert-success',
+    messages.INFO: 'alert-info',
+    messages.WARNING: 'alert-warning',
 }
 
 LOGIN_URL = '/usuarios/login/'
