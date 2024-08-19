@@ -29,7 +29,6 @@ COPY start.sh /code/
 RUN chmod +x /code/start.sh
 
 # Coletar arquivos estáticos
-RUN python manage.py collectstatic --noinput
 
 # Expor a porta
 EXPOSE 8000
