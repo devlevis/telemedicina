@@ -63,8 +63,13 @@ WSGI_APPLICATION = 'healing.wsgi.application'
 
 # Configuração do Banco de Dados
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,  # 10 minutos de reutilização de conexão
+        ssl_require=True,  # Habilita SSL se necessário
+    )
 }
+
 
 # Validação de Senhas
 AUTH_PASSWORD_VALIDATORS = [

@@ -43,6 +43,11 @@ def agendar_horario(request, id_data_aberta):
     if request.method == 'GET':
         data_aberta = DatasAbertas.objects.get(id=id_data_aberta)
         
+        if request.user == data_aberta.user :
+            messages.add_message(request, constants.ERROR, 'Você não pode agendar uma consulta própria!')
+            return redirect('/pacientes/home/')
+
+        
         horario_agendado = Consulta(
             paciente=request.user,
             data_aberta=data_aberta
